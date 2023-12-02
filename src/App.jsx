@@ -45,6 +45,10 @@ function App() {
     setTurn(TURNS.X)
     setWinner(null)
   }
+  const checkEndGame = (newBoard) =>{
+    //revisara si hubo un empate
+    return newBoard.every((square) => square !== null)
+  }
   const updateBoard = (index) =>{
     //no renderizara la posicion si ya esta ocupada por algo
     if(board[index] || winner) return
@@ -59,6 +63,9 @@ function App() {
     const newWinner = checkWinner(newBoard)
     if(newWinner){
       setWinner(newWinner)
+    } else if(checkEndGame(newBoard)){
+      // Este dara el aviso por si ya se ocuparon las casillas y no hay ganador
+      setWinner(false)
     }
   }
   return (
@@ -86,7 +93,7 @@ function App() {
         winner !== null && (
           <section className="winner">
             <div className='text'>
-              <h2>{winner === false ? 'Empate' : 'Gano:'}</h2>
+              <h2>{winner === false ? 'Empate' : 'Ganador:'}</h2>
               <header className='win'>
                 {winner && <Square>{winner}</Square>}
               </header>
